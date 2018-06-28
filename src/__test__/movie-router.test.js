@@ -30,19 +30,69 @@ describe('POST /api/movies', () => {
         throw err;
       });
   });
+
+  test('400 POST for bad request if no request body was provided', () => {
+    return superagent.post(apiUrl)
+      .then((response) => {
+        throw response;
+      })
+      .catch((err) => {
+        expect(err.status).toBe(400);
+      });
+  });
 });
 
 describe('GET /api/movies', () => {
   test('200 GET for successful fetching of a movie', () => {
-    let returnedMovie;
+    let savedMovie;
     return createMockMoviePromise()
       .then((newMovie) => {
-        returnedMovie = newMovie;
+        savedMovie = newMovie;
         return superagent.get(`${apiUrl}/${newMovie._id}`);
       })
       .then((response) => {
         expect(response.status).toEqual(200);
-        expect(response.body.name).toEqual(returnedMovie.name);
+        expect(response.body.name).toEqual(savedMovie.name);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  });
+
+  test('404 GET for valid request made with an id that was not found', () => {
+    return superagent.get(`${apiUrl}/"5b345f9d1086d2149c26d370"`)
+      .then((response) => {
+        throw response;
+      })
+      .catch((err) => {
+        expect(err.status).toBe(404);
+      });
+  });
+});
+
+describe('PUT /api/movies', () => {
+  const mockMovieForUpdate = {
+    name: 'Ashton Movie',
+    director: 'Ashton',
+  };
+
+  // console.log(mockMovieForUpdate, 'MOCK MOVwfIE FOR UPDATE');
+
+  test.only('200 PUT for successful update of a resource', () => {
+    let savedMovie;
+    return createMockMoviePromise()
+      .then((newMovie) => {
+        savedMovie = newMovie;
+        // console.log(savedMovie, 'RETURNED MOVIE');
+        return superagent.put(`${apiUrl}/${newMovie._id}`)
+          .send(mockMovieForUpdate);
+      })
+      .then((response) => {
+        expect(response.status).toBe(200);
+        // console.log(response.body, 'RESPONSE BODY');
+        expect(response.body._id).toBe(savedMovie._id);
+        expect(response.body.name).toBe(mockMovieForUpdate.name);
+        expect(response.body.director).toBe(response.body.director);
       })
       .catch((err) => {
         throw err;

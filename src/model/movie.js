@@ -20,12 +20,12 @@ const movieSchema = mongoose.Schema({
   ],
 }, { timestamps: true });
 
-function moviesPreHook(done) {
+function moviePreFindHook(done) {
   this.populate('dinosaurs');
   done();
 }
 
-movieSchema.pre('findOne', moviesPreHook);
+movieSchema.pre('findOne', moviePreFindHook);
 
 const skipInit = process.env.NODE_ENV === 'development';
 export default mongoose.model('movies', movieSchema, 'movies', skipInit);

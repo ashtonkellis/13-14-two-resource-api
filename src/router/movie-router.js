@@ -3,6 +3,7 @@
 import { Router } from 'express';
 import logger from '../lib/logger';
 import Movie from '../model/movie';
+// import { Mongoose } from 'mongoose';
 
 const movieRouter = new Router();
 
@@ -27,6 +28,20 @@ movieRouter.get('/api/movies/:id?', (request, response, next) => {
     .then((foundMovie) => {
       logger.log(logger.INFO, `MOVIE ROUTER: FOUND THE MODEL, ${JSON.stringify(foundMovie)}`);
       response.json(foundMovie);
+    })
+    .catch(next);
+});
+
+movieRouter.put('/api/movies/:id?', (request, response, next) => {
+  Movie.init()
+    .then(() => {
+      logger.log(logger.INFO, `MOVIE ROUTER BEFORE PUT: Updating movie ${JSON.stringify(request.body)}`);
+
+      console.log(request.body, 'PUT REQUEST BODY');
+      return Movie.findByIdAndUpdate(request.params.id, request.body);
+    })
+    .then((updatedMovie) => {
+      console.log(updatedMovie, 'UPDATED MOVIE');
     })
     .catch(next);
 });
