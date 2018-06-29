@@ -145,7 +145,3 @@ describe('DELETE /api/movies', () => {
       });
   });
 });
-
-// `DELETE` request
-// should pass the id of a resource though the url endpoint to delete a resource
-// this should use `req.params`

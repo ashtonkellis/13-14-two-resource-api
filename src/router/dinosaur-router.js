@@ -59,4 +59,17 @@ dinosaurRouter.put('/api/dinosaurs/:id?', (request, response, next) => {
   return undefined;
 });
 
+dinosaurRouter.delete('/api/dinosaurs/:id?', (request, response, next) => {
+  Dinosaur.init()
+    .then(() => {
+      logger.log(logger.INFO, `DINOSAUR ROUTER BEFORE DELETE: Deleting dinosaur ${JSON.stringify(request.params)}`);
+
+      return Dinosaur.findOneAndRemove(request.params.id);
+    })
+    .then((data) => {
+      return response.status(204).json(data);
+    })
+    .catch(next);
+});
+
 export default dinosaurRouter;

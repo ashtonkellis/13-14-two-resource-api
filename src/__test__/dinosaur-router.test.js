@@ -92,10 +92,8 @@ describe('PUT /api/dinosaurs', () => {
   };
 
   test('200 PUT for successful update of a resource', () => {
-    let savedDinosaur;
     return createMockDataPromise()
       .then((data) => {
-        savedDinosaur = data.dinosaur;
         return superagent.put(`${apiUrl}/${data.dinosaur._id}`)
           .send(mockDinosaurForUpdate);
       })
@@ -112,10 +110,8 @@ describe('PUT /api/dinosaurs', () => {
   });
 
   test('400 PUT if no request body was provided', () => {
-    let savedDinosaur;
     return createMockDataPromise()
       .then((data) => {
-        savedDinosaur = data.dinosaur;
         return superagent.put(`${apiUrl}/${data.dinosaur._id}`);
       })
       .then((response) => {
@@ -140,10 +136,15 @@ describe('PUT /api/dinosaurs', () => {
 
 describe('DELETE /api/dinosaurs', () => {
   test('204 DELETE for a successful delete', () => {
-
-  });
-
-  test('404 DELETE for valid request with an id that was not found', () => {
-
+    return createMockDataPromise()
+      .then((data) => {
+        return superagent.delete(`${apiUrl}/${data.dinosaur._id}`);
+      })
+      .then((response) => {
+        expect(response.status).toBe(204);
+      })
+      .catch((err) => {
+        throw err;
+      });
   });
 });
