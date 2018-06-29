@@ -11,11 +11,12 @@ const apiUrl = `http://localhost:${process.env.PORT}/api/dinosaurs`;
 
 beforeAll(startServer);
 afterAll(stopServer);
-afterEach(() => {
+afterEach((done) => {
   Promise.all([
     Movie.remove({}),
     Dinosaur.remove({}),
   ]);
+  done();
 });
 
 describe('POST /api/dinosaurs', () => {
