@@ -95,7 +95,7 @@ describe('PUT /api/movies', () => {
       });
   });
 
-  test.only('400 PUT if no request body was provided', () => {
+  test('400 PUT if no request body was provided', () => {
     return createMockMoviePromise()
       .then((newMovie) => {
         return superagent.put(`${apiUrl}/${newMovie._id}`)
@@ -109,6 +109,13 @@ describe('PUT /api/movies', () => {
   });
 
   test('404 PUT for valid request made with an id that was not found', () => {
-
+    return superagent.put(`${apiUrl}/123`)
+      .send(mockMovieForUpdate)
+      .then((results) => {
+        throw results;
+      })
+      .catch((err) => {
+        expect(err.status).toBe(404);
+      });
   });
 });
