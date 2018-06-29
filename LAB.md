@@ -11,12 +11,6 @@
 
 ### MOVIES!!
 ### `/api/resource-name/:id`
-* `PUT` request
-  * should pass data as stringifed JSON in the body of a put request to overwrite a pre-existing resource
-* `PUT` - test 200, returns a resource with an updated body
-* `PUT` - test 400, responds with 'bad request' if no request body was provided
-* `PUT` - test 404, responds with 'not found' for valid requests made with an id that was not found
-
 * `DELETE` request
   * should pass the id of a resource though the url endpoint to delete a resource
     * **this should use `req.params`**

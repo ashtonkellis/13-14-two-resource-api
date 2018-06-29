@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import HttpErrors from 'http-errors';
+import createError from 'http-errors';
 import logger from '../lib/logger';
 import Dinosaur from '../model/dinosaur';
 
@@ -21,7 +21,7 @@ dinosaurRouter.post('/api/dinosaurs', (request, response, next) => {
 
 dinosaurRouter.get('/api/dinosaurs/:id?', (request, response, next) => {
   if (!request.params.id) {
-    return next(new HttpErrors(400, 'Did not enter and ID'));
+    return next(createError(400, 'Did not enter and ID'));
   }
 
   Dinosaur.init()
@@ -31,6 +31,29 @@ dinosaurRouter.get('/api/dinosaurs/:id?', (request, response, next) => {
     .then((foundDinosaur) => {
       logger.log(logger.INFO, `DINOSAUR ROUTER: AFTER GETTING DINOSAUR ${JSON.stringify(foundDinosaur)}`);
       return response.json(foundDinosaur);
+    })
+    .catch(next);
+  return undefined;
+});
+
+dinosaurRouter.put('/api/dinosaurs/:id?', (request, response, next) => {
+  if (JSON.stringify(request.body).length <= 2) return next(createError(400, 'Not Found'));
+  
+  Dinosaur.init()
+    .then(() => {
+      // error checking
+      logger.log(logger.INFO, `DINOSAUR ROUTER BEFORE PUT: Updating dinosaur ${JSON.stringify(request.body)}`);
+
+      const options = {
+        new: true,
+        runValidators: true,
+      };
+
+      return Dinosaur.findByIdAndUpdate(request.params.id, request.body, options);
+    })
+    .then((updatedDinosaur) => {
+      logger.log(logger.INFO, `MOVIE ROUTER AFTER PUT: Updated dinosaur details ${JSON.stringify(updatedDinosaur)}`);
+      return response.json(updatedDinosaur);
     })
     .catch(next);
   return undefined;

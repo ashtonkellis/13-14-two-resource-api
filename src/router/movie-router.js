@@ -2,9 +2,9 @@
 
 // import { Mongoose } from 'mongoose';
 import { Router } from 'express';
+import createError from 'http-errors';
 import logger from '../lib/logger';
 import Movie from '../model/movie';
-import createError from 'http-errors';
 
 // var createError = require('http-errors')
 // var express = require('express')
@@ -47,12 +47,6 @@ movieRouter.put('/api/movies/:id?', (request, response, next) => {
 
   Movie.init()
     .then(() => {
-      if (!request.body) {
-        const err = new Error();
-        err.status = 400;
-        return next(err);
-      }
-      
       logger.log(logger.INFO, `MOVIE ROUTER BEFORE PUT: Updating movie ${JSON.stringify(request.body)}`);
 
       const options = {
@@ -64,8 +58,20 @@ movieRouter.put('/api/movies/:id?', (request, response, next) => {
     })
     .then((updatedMovie) => {
       logger.log(logger.INFO, `MOVIE ROUTER AFTER PUT: Updated movie details ${JSON.stringify(updatedMovie)}`);
-      console.log(updatedMovie, 'UPDATED MOVIE COMING BACK');
       return response.json(updatedMovie);
+    })
+    .catch(next);
+  return undefined;
+});
+
+movieRouter.delete('/api/movies/:id?', (request, response, next) => {
+  Movie.init()
+    .then(() => {
+      logger.log(logger.INFO, `MOVIE ROUTER BEFORE DELETE: Deleting movie #${request.params.id}`);
+      return Movie.findByIdAndRemove(request.params.id);
+    })
+    .then((data) => {
+      return response.status(204).json(data);
     })
     .catch(next);
 });

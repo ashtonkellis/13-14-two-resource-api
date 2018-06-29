@@ -53,6 +53,7 @@ describe('GET /api/movies', () => {
       .then((response) => {
         expect(response.status).toEqual(200);
         expect(response.body.name).toEqual(savedMovie.name);
+        expect(response.body.director).toEqual(savedMovie.director);
       })
       .catch((err) => {
         throw err;
@@ -119,3 +120,32 @@ describe('PUT /api/movies', () => {
       });
   });
 });
+
+describe('DELETE /api/movies', () => {
+  test('204 DELETE for a successful delete', () => {
+    return createMockMoviePromise()
+      .then((newMovie) => {
+        return superagent.delete(`${apiUrl}/${newMovie._id}`);
+      })
+      .then((response) => {
+        expect(response.status).toBe(204);
+      })
+      .catch((err) => {
+        throw err;
+      });
+  });
+
+  test('404 DELETE for valid request with an id that was not found', () => {
+    return superagent.delete(`${apiUrl}/123`)
+      .then((results) => {
+        throw results;
+      })
+      .catch((err) => {
+        expect(err.status).toBe(404);
+      });
+  });
+});
+
+// `DELETE` request
+// should pass the id of a resource though the url endpoint to delete a resource
+// this should use `req.params`
