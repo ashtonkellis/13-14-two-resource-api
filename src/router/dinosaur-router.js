@@ -14,7 +14,7 @@ dinosaurRouter.post('/api/dinosaurs', (request, response, next) => {
     })
     .then((newDinosaur) => {
       logger.log(logger.INFO, `DINOSAUR ROUTER: POST AFTER SAVE: ${JSON.stringify(newDinosaur)}`);
-      response.json(newDinosaur);
+      return response.json(newDinosaur);
     })
     .catch(next);
 });
