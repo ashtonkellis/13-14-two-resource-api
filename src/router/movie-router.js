@@ -1,9 +1,19 @@
 'use strict';
 
+// import { Mongoose } from 'mongoose';
 import { Router } from 'express';
 import logger from '../lib/logger';
 import Movie from '../model/movie';
-// import { Mongoose } from 'mongoose';
+import createError from 'http-errors';
+
+// var createError = require('http-errors')
+// var express = require('express')
+// var app = express()
+ 
+// app.use(function (req, res, next) {
+//   if (!req.user) return next(createError(401, 'Please login to view this page.'))
+//   next()
+// })
 
 const movieRouter = new Router();
 
@@ -33,15 +43,29 @@ movieRouter.get('/api/movies/:id?', (request, response, next) => {
 });
 
 movieRouter.put('/api/movies/:id?', (request, response, next) => {
+  if (JSON.stringify(request.body).length <= 2) return next(createError(400, 'Not found'));
+
   Movie.init()
     .then(() => {
+      if (!request.body) {
+        const err = new Error();
+        err.status = 400;
+        return next(err);
+      }
+      
       logger.log(logger.INFO, `MOVIE ROUTER BEFORE PUT: Updating movie ${JSON.stringify(request.body)}`);
 
-      console.log(request.body, 'PUT REQUEST BODY');
-      return Movie.findByIdAndUpdate(request.params.id, request.body);
+      const options = {
+        new: true,
+        runValidators: true,
+      };
+
+      return Movie.findByIdAndUpdate(request.params.id, request.body, options);
     })
     .then((updatedMovie) => {
-      console.log(updatedMovie, 'UPDATED MOVIE');
+      logger.log(logger.INFO, `MOVIE ROUTER AFTER PUT: Updated movie details ${JSON.stringify(updatedMovie)}`);
+      console.log(updatedMovie, 'UPDATED MOVIE COMING BACK');
+      return response.json(updatedMovie);
     })
     .catch(next);
 });

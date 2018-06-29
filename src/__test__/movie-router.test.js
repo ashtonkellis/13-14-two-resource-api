@@ -76,26 +76,39 @@ describe('PUT /api/movies', () => {
     director: 'Ashton',
   };
 
-  // console.log(mockMovieForUpdate, 'MOCK MOVwfIE FOR UPDATE');
-
-  test.only('200 PUT for successful update of a resource', () => {
+  test('200 PUT for successful update of a resource', () => {
     let savedMovie;
     return createMockMoviePromise()
       .then((newMovie) => {
         savedMovie = newMovie;
-        // console.log(savedMovie, 'RETURNED MOVIE');
         return superagent.put(`${apiUrl}/${newMovie._id}`)
           .send(mockMovieForUpdate);
       })
       .then((response) => {
         expect(response.status).toBe(200);
-        // console.log(response.body, 'RESPONSE BODY');
-        expect(response.body._id).toBe(savedMovie._id);
+        expect(response.body._id.toString()).toBe(savedMovie._id.toString());
         expect(response.body.name).toBe(mockMovieForUpdate.name);
         expect(response.body.director).toBe(response.body.director);
       })
       .catch((err) => {
         throw err;
       });
+  });
+
+  test.only('400 PUT if no request body was provided', () => {
+    return createMockMoviePromise()
+      .then((newMovie) => {
+        return superagent.put(`${apiUrl}/${newMovie._id}`)
+          .then((response) => {
+            throw response;
+          })
+          .catch((err) => {
+            expect(err.status).toBe(400);
+          });
+      });
+  });
+
+  test('404 PUT for valid request made with an id that was not found', () => {
+
   });
 });

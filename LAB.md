@@ -3,11 +3,11 @@
 * Create a pull request from your lab branch branch to your `master` branch
 * Open a pull request to this repository
 * Submit on canvas 
-- a question:  
-- and observation: 
-- your original estimate: 
-- how long you spent: 
-- and a link to your pull request: 
+- a question:  why does a mongoose.Model.update() not do what it's supposed to do!?!?
+- and observation: mongoose is a POS.
+- your original estimate: 5 hours.
+- how long you spent: 5 hours. still not done. bedtime though.
+- and a link to your pull request: https://github.com/ashtonkellis/13-14-two-resource-api/pull/2
 
 ### MOVIES!!
 ### `/api/resource-name/:id`
