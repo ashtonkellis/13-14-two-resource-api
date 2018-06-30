@@ -23,7 +23,7 @@ const dinosaurSchema = mongoose.Schema({
   },
   movieId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    // required: true,
   },
 }, { timestamps: true });
 
