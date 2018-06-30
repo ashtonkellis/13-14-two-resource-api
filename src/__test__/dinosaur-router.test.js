@@ -43,28 +43,28 @@ afterEach((done) => {
 // });
 
 describe('POST /api/dinosaurs', () => {
-  // test('200 POST for succcesful posting of a dinosaur', () => {
-  //   return createMockDinosaur()
-  //     .then((mockData) => {
-  //       const newMockDinosaur = {
-  //         name: faker.name.firstName(),
-  //         species: faker.lorem.words(2),
-  //         eatsPlants: faker.random.boolean(),
-  //         eatsMeat: faker.random.boolean(),
-  //         movieId: mockData.movie._id,
-  //       };
+  test('200 POST for succcesful posting of a dinosaur', () => {
+    return createMockDinosaur()
+      .then((mockData) => {
+        const newMockDinosaur = {
+          name: 'Little Foot',
+          species: 'Long Neck',
+          eatsPlants: true,
+          eatsMeat: false,
+          movieId: mockData.movie._id,
+        };
 
-  //       console.log(newMockDinosaur, 'MOCK DINOSAUR');
-  //       return superagent.post(apiUrl)
-  //         .send(newMockDinosaur)
-  //         .then((response) => {
-  //           expect(response.status).toEqual(200);
-  //         })
-  //         .catch((err) => {
-  //           throw err;
-  //         });
-  //     });
-  // });
+        console.log(newMockDinosaur, 'MOCK DINOSAUR');
+        return superagent.post(apiUrl)
+          .send(newMockDinosaur)
+          .then((response) => {
+            expect(response.status).toEqual(200);
+          })
+          .catch((err) => {
+            throw err;
+          });
+      });
+  });
 
   test('400 POST for bad request if no request body was provided', () => {
     return superagent.post(apiUrl)
