@@ -6,14 +6,33 @@ import Dinosaur from '../model/dinosaur';
 
 const dinosaurRouter = new Router();
 
-dinosaurRouter.post('/api/dinosaurs', (request, response, next) => {
+// studentRouter.post('/api/students', (request, response, next) => {
+//   Student.init()
+//     .then(() => {
+//       logger.log(logger.INFO, `STUDENT ROUTER: POST BEFORE SAVE: ${JSON.stringify(request.body)}`);
+//       return new Student(request.body).save();
+//     })
+//     .then((newStudent) => {
+//       logger.log(logger.INFO, `STUDENT ROUTER: POST AFTER SAVE: ${JSON.stringify(newStudent)}`);
+//       response.json(newStudent);
+//     })
+//     .catch(next);
+// });
+
+dinosaurRouter.post('/api/dinosaurs/', (request, response, next) => {
   Dinosaur.init()
     .then(() => {
       logger.log(logger.INFO, `DINOSAUR ROUTER: POST BEFORE SAVE: ${JSON.stringify(request.body)}`);
+
+      // console.log(request.body, 'REQUEST BODY FROM DINOSAUR ROUTER POST');
+
       return new Dinosaur(request.body).save();
     })
     .then((newDinosaur) => {
+      // console.log(newDinosaur, 'NEW DINOSAUR');
+
       logger.log(logger.INFO, `DINOSAUR ROUTER: POST AFTER SAVE: ${JSON.stringify(newDinosaur)}`);
+
       return response.json(newDinosaur);
     })
     .catch(next);
