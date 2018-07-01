@@ -20,28 +20,6 @@ afterEach((done) => {
   done();
 });
 
-// describe('POST /api/students', () => {
-//   test('200 POST for succcesful posting of a student', () => {
-//     return createMockDataPromise()
-//       .then((mockData) => {
-//         const mockStudent = {
-//           first: faker.name.firstName(),
-//           last: faker.name.lastName(),
-//           classRoomId: mockData.classRoom._id,
-//         };
-
-//         return superagent.post(apiUrl)
-//           .send(mockStudent)
-//           .then((response) => {
-//             expect(response.status).toEqual(200);
-//           })
-//           .catch((err) => {
-//             throw err;
-//           });
-//       });
-//   });
-// });
-
 describe('POST /api/dinosaurs', () => {
   test('200 POST for succcesful posting of a dinosaur', () => {
     return createMockDinosaur()
