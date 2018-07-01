@@ -2,12 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import logger from './logger';
-import movieRouter from '../router/movie-router';
-import dinosaurRouter from '../router/dinosaur-router';
+// import movieRouter from '../router/movie-router';
+// import dinosaurRouter from '../router/dinosaur-router';
 
 // middleware
 import errorMiddleWare from './middleware/error-middleware';
 import loggerMiddleware from './middleware/logger-middleware';
+import modelRouter from '../router/model-router';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,8 +22,10 @@ app.use(express.json());
 // our own modules
 app.use(loggerMiddleware);
 
-app.use(movieRouter);
-app.use(dinosaurRouter);
+
+app.use(modelRouter);
+// app.use(movieRouter);
+// app.use(dinosaurRouter);
 
 app.use(errorMiddleWare);
 
