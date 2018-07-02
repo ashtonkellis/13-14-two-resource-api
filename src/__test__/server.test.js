@@ -3,7 +3,7 @@
 import superagent from 'superagent';
 import { startServer, stopServer } from '../lib/server';
 
-const apiUrl = `http://localhost:${process.env.PORT}/api/BADPATH!!`;
+const apiUrl = `http://localhost:${process.env.PORT}/api//reallybadpath`;
 
 beforeAll(startServer);
 afterAll(stopServer);

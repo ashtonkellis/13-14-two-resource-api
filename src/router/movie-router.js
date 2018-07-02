@@ -6,15 +6,6 @@ import createError from 'http-errors';
 import logger from '../lib/logger';
 import Movie from '../model/movie';
 
-// var createError = require('http-errors')
-// var express = require('express')
-// var app = express()
- 
-// app.use(function (req, res, next) {
-//   if (!req.user) return next(createError(401, 'Please login to view this page.'))
-//   next()
-// })
-
 const movieRouter = new Router();
 
 movieRouter.post('/api/movies', (request, response, next) => {
@@ -65,6 +56,7 @@ movieRouter.put('/api/movies/:id?', (request, response, next) => {
 });
 
 movieRouter.delete('/api/movies/:id?', (request, response, next) => {
+  // console.log(request.body, 'RESPONSE BODY');
   Movie.init()
     .then(() => {
       logger.log(logger.INFO, `MOVIE ROUTER BEFORE DELETE: Deleting movie #${request.params.id}`);
