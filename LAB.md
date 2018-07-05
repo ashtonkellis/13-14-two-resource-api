@@ -22,11 +22,10 @@
 * Deploy your app to Heroku 
 * Create a pull request from your lab branch branch to your master branch
 * Submit on canvas:
-  * your original estimate
-  * how long you spent
-  * a link to your pull request
-  * your deployed Heroku URL
-  * any other thoughts about how this lab went
+  * your original estimate: 4 hours
+  * how long you spent: 5 hours
+  * a link to your pull request: https://github.com/ashtonkellis/13-14-two-resource-api/pull/5
+  * your deployed Heroku URL: https://lab13-14.herokuapp.com/
 
 ## Resources
 * [express docs](http://expressjs.com/en/4x/api.html)
